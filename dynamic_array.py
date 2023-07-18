@@ -225,28 +225,29 @@ class DynamicArray:
 
 
 def find_mode(arr: DynamicArray) -> (DynamicArray, int):
-    """Find the mode(s) and frequency of occurrence in a sorted DynamicArray"""
+    """Find the mode(s) and frequency of occurrence in a sorted DynamicArray."""
     if arr.is_empty():
         return DynamicArray(), 0
 
     mode = DynamicArray()
-    max_freq = 0
+    max_freq = 1
     current_freq = 1
 
-    for element in range(1, arr.length()):
-        if arr[element] == arr[element - 1]:
+    for i in range(1, arr.length()):
+        if arr[i] == arr[i - 1]:
             current_freq += 1
         else:
             if current_freq > max_freq:
+                mode = DynamicArray([arr[i - 1]])
                 max_freq = current_freq
-                mode = DynamicArray([arr[element - 1]])
             elif current_freq == max_freq:
-                mode.append(arr[element - 1])
+                mode.append(arr[i - 1])
             current_freq = 1
 
-        # Check the last element
+    # Check the last element
     if current_freq > max_freq:
         mode = DynamicArray([arr[-1]])
+        max_freq = current_freq
     elif current_freq == max_freq:
         mode.append(arr[-1])
 
