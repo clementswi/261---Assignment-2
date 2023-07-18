@@ -90,17 +90,11 @@ class DynamicArray:
 
     def append(self, value: object) -> None:
         """Add a new value at the end of the dynamic array.
-
-        Args:
-            value (object): The value to be appended to the dynamic array.
-
-        Notes:
         If the internal storage associated with the dynamic array is already full,
         the capacity will be doubled using the `resize` method before adding the new value.
         """
-
-        if self._size == self._data.get_length():
-            self.resize(2 * self._data.get_length())
+        if self._size == self._data.length():
+            self.resize(2 * self._data.length())
 
         self._data.set(self._size, value)
         self._size += 1
