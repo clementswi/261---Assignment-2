@@ -128,8 +128,8 @@ class DynamicArray:
         self._size -= 1
 
         # Reduce capacity if needed
-        if self._size < self._data.length() // 8 and self._data.length() > 4:
-            new_capacity = max(self._size * 2, 4)
+        if self._size < self._data.length() // 4 and self._data.length() > 10:
+            new_capacity = max(self._size * 2, 10)
             self.resize(new_capacity)
 
     def slice(self, start_index: int, size: int) -> object:
