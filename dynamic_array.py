@@ -80,12 +80,13 @@ class DynamicArray:
         # Ensure that new_capacity is at least 4 (the default capacity)
         new_capacity = max(new_capacity, 4)
 
-        new_data = StaticArray(new_capacity)
-        for i in range(self._size):
-            new_data[i] = self._data[i]
+        if new_capacity >= self._size:
+            new_data = StaticArray(new_capacity)
+            for i in range(self._size):
+                new_data[i] = self._data[i]
 
-        self._data = new_data
-        self._capacity = new_capacity
+            self._data = new_data
+            self._capacity = new_capacity
 
     def append(self, value: object) -> None:
         """Add a new value at the end of the dynamic array.
