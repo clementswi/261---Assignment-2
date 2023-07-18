@@ -79,24 +79,21 @@ class Bag:
         # Step 3: All elements are equal
         return True
 
-    class Bag:
-        # ... (other methods)
+    def iterator(self):
+        """Create iterator for the Bag"""
+        return BagIterator(self._da)
 
-        def __iter__(self):
-            """Create iterator for the Bag"""
-            return self.BagIterator(self._da)
+class BagIterator:
+    def __init__(self, dynamic_array):
+        self._dynamic_array = dynamic_array
+        self._index = 0
 
-        class BagIterator:
-            def __init__(self, dynamic_array):
-                self._dynamic_array = dynamic_array
-                self._index = 0
+    def has_next(self):
+        return self._index < len(self._dynamic_array)
 
-            def __iter__(self):
-                return self
-
-            def __next__(self):
-                if self._index < self._dynamic_array.length():
-                    value = self._dynamic_array[self._index]
-                    self._index += 1
-                    return value
-                raise StopIteration
+    def next(self):
+        if self.has_next():
+            value = self._dynamic_array[self._index]
+            self._index += 1
+            return value
+        raise StopIteration
