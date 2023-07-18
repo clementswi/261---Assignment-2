@@ -58,73 +58,45 @@ class Bag:
         if self._da.length() != second_bag._da.length():
             return False
 
-        # Step 2: Create a copy of the dynamic arrays to avoid modifying the original ones
-        self_copy = self._da.slice(0, self._da.length())
-        second_copy = second_bag._da.slice(0, second_bag._da.length())
+        # Step 2: Check the occurrence of each element in self bag
+        for i in range(self._da.length()):
+            element = self._da[i]
+            self_occurrences = 1
 
-        # Step 3: Compare each element in both bags
-        for i in range(self_copy.length()):
-            element = self_copy[i]
-            found = False
+            for j in range(i + 1, self._da.length()):
+                if self._da[j] == element:
+                    self_occurrences += 1
 
-            for j in range(second_copy.length()):
-                if element == second_copy[j]:
-                    found = True
-                    # Remove the found element to avoid counting duplicates
-                    second_copy.remove_at_index(j)
-                    break
+            # Check the occurrence of the same element in second_bag
+            second_occurrences = 0
+            for j in range(second_bag._da.length()):
+                if second_bag._da[j] == element:
+                    second_occurrences += 1
 
-            if not found:
+            if second_occurrences != self_occurrences:
                 return False
 
-        # Step 4: All elements are equal
+        # Step 3: All elements are equal
         return True
 
-
-    def __iter__(self):
-        """Create iterator for the Bag"""
-        index = 0
-        while index < self._da.length():
-            yield self._da.get_at_index(index)
-            index += 1
-
-    class BagIterator:
-        def __init__(self, bag):
-            self._bag = bag
-            self._index = 0
+    class Bag:
+        # ... (other methods)
 
         def __iter__(self):
-            return self
+            """Create iterator for the Bag"""
+            return self.BagIterator(self._da)
 
-        def __next__(self):
-            if self._index < self._bag.size():
-                value = self._bag.get_at_index(self._index)
-                self._index += 1
-                return value
-            raise StopIteration
+        class BagIterator:
+            def __init__(self, dynamic_array):
+                self._dynamic_array = dynamic_array
+                self._index = 0
 
-    def __init__(self, start_bag=None):
-        """Initialize a new bag based on Dynamic Array"""
-        self._da = DynamicArray()
-        # populate bag with initial values (if provided)
-        if start_bag is not None:
-            for value in start_bag:
-                self.add(value)
+            def __iter__(self):
+                return self
 
-    def __str__(self) -> str:
-        """Return content of bag in human-readable form"""
-        out = "BAG: " + str(self._da.length()) + " elements. ["
-        out += ', '.join([str(self._da.get_at_index(i)) for i in range(self._da.length())])
-        return out + ']'
-
-    def add(self, value: object) -> None:
-        """Add a new element to the bag"""
-        self._da.append(value)
-
-    def size(self) -> int:
-        """Return total number of items currently in the bag"""
-        return self._da.length()
-
-    def __iter__(self):
-        """Create iterator for the Bag"""
-        return self.BagIterator(self)
+            def __next__(self):
+                if self._index < self._dynamic_array.length():
+                    value = self._dynamic_array[self._index]
+                    self._index += 1
+                    return value
+                raise StopIteration
