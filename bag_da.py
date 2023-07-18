@@ -58,20 +58,18 @@ class Bag:
         if self._da.length() != second_bag._da.length():
             return False
 
-        # Step 2: Check if all elements of self are in second_bag
-        for num in range(self._da.length()):
-            element = self._da.get_at_index(num)
-            if second_bag._da.index_of(element) == -1:
+        # Step 2: Sort both bags
+        self._da.sort()
+        second_bag._da.sort()
+
+        # Step 3: Compare each element in both bags
+        for i in range(self._da.length()):
+            if self._da[i] != second_bag._da[i]:
                 return False
 
-        # Step 3: Check if all elements of second_bag are in self
-        for num in range(second_bag._da.length()):
-            element = second_bag._da.get_at_index(num)
-            if self._da.index_of(element) == -1:
-                return False
-
-        # Step 4: All elements are found in both bags
+        # Step 4: All elements are equal
         return True
+
 
     def __iter__(self):
         """Create iterator for the Bag"""
