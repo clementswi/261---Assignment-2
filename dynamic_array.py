@@ -77,8 +77,8 @@ class DynamicArray:
         print(f"Length: {self._size}, Capacity: {self._capacity}, {self._data}")
 
     def resize(self, new_capacity: int) -> None:
-        # Ensure that new_capacity is at least DEFAULT_CAPACITY
-        new_capacity = max(new_capacity, DynamicArray.DEFAULT_CAPACITY)
+        # Ensure that new_capacity is at least 4 (the default capacity)
+        new_capacity = max(new_capacity, 4)
 
         new_data = StaticArray(new_capacity)
         for i in range(self._size):
