@@ -76,17 +76,16 @@ class DynamicArray:
         Used for testing purposes."""
         print(f"Length: {self._size}, Capacity: {self._capacity}, {self._data}")
 
-
-
     def resize(self, new_capacity: int) -> None:
-        if new_capacity <= 0 or new_capacity < self._size:
-            return
+        if new_capacity < self.DEFAULT_CAPACITY:
+            new_capacity = self.DEFAULT_CAPACITY
 
         new_data = StaticArray(new_capacity)
-        for element in range(self._size):
-            new_data.set(element, self._data.get(element))
+        for i in range(self._size):
+            new_data[i] = self._data[i]
 
         self._data = new_data
+        self._capacity = new_capacity
 
     def append(self, value: object) -> None:
         """Add a new value at the end of the dynamic array.
