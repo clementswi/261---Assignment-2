@@ -58,25 +58,26 @@ class Bag:
         if self._da.length() != second_bag._da.length():
             return False
 
-        # Step 2: Check the occurrence of each element in self bag
-        for i in range(self._da.length()):
-            element = self._da[i]
-            self_occurrences = 1
+        # Step 2: Create a copy of the dynamic arrays to avoid modifying the original ones
+        self_copy = self._da.slice(0, self._da.length())
+        second_copy = second_bag._da.slice(0, second_bag._da.length())
 
-            for j in range(i + 1, self._da.length()):
-                if self._da[j] == element:
-                    self_occurrences += 1
+        # Step 3: Compare each element in both bags
+        for i in range(self_copy.length()):
+            element = self_copy[i]
+            found = False
 
-            # Check the occurrence of the same element in second_bag
-            second_occurrences = 0
-            for j in range(second_bag._da.length()):
-                if second_bag._da[j] == element:
-                    second_occurrences += 1
+            for j in range(second_copy.length()):
+                if element == second_copy[j]:
+                    found = True
+                    # Remove the found element to avoid counting duplicates
+                    second_copy.remove_at_index(j)
+                    break
 
-            if second_occurrences != self_occurrences:
+            if not found:
                 return False
 
-        # Step 3: All elements are equal
+        # Step 4: All elements are equal
         return True
 
 
