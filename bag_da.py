@@ -58,9 +58,22 @@ class Bag:
         if self._da.length() != second_bag._da.length():
             return False
 
-        # Step 2: Compare each element in both bags
+        # Step 2: Check the occurrence of each element in self bag
         for i in range(self._da.length()):
-            if self._da[i] != second_bag._da[i]:
+            element = self._da[i]
+            self_occurrences = 1
+
+            for j in range(i + 1, self._da.length()):
+                if self._da[j] == element:
+                    self_occurrences += 1
+
+            # Check the occurrence of the same element in second_bag
+            second_occurrences = 0
+            for j in range(second_bag._da.length()):
+                if second_bag._da[j] == element:
+                    second_occurrences += 1
+
+            if second_occurrences != self_occurrences:
                 return False
 
         # Step 3: All elements are equal
