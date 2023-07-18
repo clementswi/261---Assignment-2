@@ -101,24 +101,16 @@ class DynamicArray:
 
     def insert_at_index(self, index: int, value: object) -> None:
         """Add a new value at the specified index in the dynamic array.
-
-        Args:
-            index (int): The index at which the value will be inserted.
-            value (object): The value to be inserted into the dynamic array.
-
-        Raises:
-            DynamicArrayException: If the provided index is invalid.
-
-        Returns:
-            None.
-            """
+        If the internal storage associated with the dynamic array is already full,
+        the capacity will be doubled using the `resize` method before adding the new value.
+        """
         if index < 0 or index > self._size:
             raise DynamicArrayException("Invalid index")
 
-        if self._size == self._data.get_length():
-            self.resize(2 * self._data.get_length())
+        if self._size == self._data.length():
+            self.resize(2 * self._data.length())
 
-        for element in range(self._size, index, -1):
+        for i in range(self._size, index, -1):
             self._data.set(i, self._data.get(i - 1))
 
         self._data.set(index, value)
