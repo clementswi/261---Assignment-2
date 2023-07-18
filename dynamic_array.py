@@ -117,28 +117,18 @@ class DynamicArray:
         self._size += 1
 
     def remove_at_index(self, index: int) -> None:
-        """Remove the element at the specified index in the dynamic array.
-
-        Args:
-        index (int): The index of the element to be removed.
-
-        Raises:
-        DynamicArrayException: If the provided index is invalid.
-
-        Returns:
-        None.
-        """
+        """Remove the element at the specified index in the dynamic array."""
         if index < 0 or index >= self._size:
             raise DynamicArrayException("Invalid index")
 
-        for element in range(index, self._size - 1):
-            self._data.set(element, self._data.get(element + 1))
+        for i in range(index, self._size - 1):
+            self._data.set(i, self._data.get(i + 1))
 
         self._data.set(self._size - 1, None)
         self._size -= 1
 
         # Reduce capacity if needed
-        if self._size < self._data.get_length() // 4 and self._data.get_length() > 10:
+        if self._size < self._data.length() // 4 and self._data.length() > 10:
             new_capacity = max(self._size * 2, 10)
             self.resize(new_capacity)
 
