@@ -58,16 +58,12 @@ class Bag:
         if self._da.length() != second_bag._da.length():
             return False
 
-        # Step 2: Sort both bags
-        self._da.sort()
-        second_bag._da.sort()
-
-        # Step 3: Compare each element in both bags
+        # Step 2: Compare each element in both bags
         for i in range(self._da.length()):
             if self._da[i] != second_bag._da[i]:
                 return False
 
-        # Step 4: All elements are equal
+        # Step 3: All elements are equal
         return True
 
 
